@@ -1,0 +1,33 @@
+---
+title: "Key Concepts"
+description: "Explanations of the core concepts behind DMF: mint, redeem, 1:1 backing, on-chain reserves, immutable contracts, and non-custodial design."
+audience: both
+section: "Overview"
+date: 2025-05-19
+---
+
+# Key Concepts
+
+## Mint
+
+Minting is how dmfUSD comes into existence. You send USDC to the DMF smart contract, and it issues an equal amount of dmfUSD to your wallet. Anyone with USDC and a Base wallet can do it — no application, no approval, no questions asked. A small mint fee might come out of your deposit, but the math is simple and transparent. Your minted dmfUSD lands in your wallet, and your USDC gets locked safely in the contract's reserve.
+
+## Redeem
+
+Redeeming is the reverse: you send dmfUSD back to the contract and get USDC in return. The contract burns your dmfUSD (permanently removing it from circulation). Like minting, it's permissionless — any dmfUSD holder can do it at any time. A small redeem fee might be subtracted from the USDC you receive. The ability to always redeem is the core promise of the protocol, and it's baked into the code.
+
+## 1:1 Backing
+
+Every dmfUSD in existence is backed by exactly one USDC held in the contract's reserve. This isn't a marketing slogan — it's an invariant enforced by the smart contract itself. The total USDC balance must always be at least as big as the total dmfUSD supply. This rule prevents any possibility of fractional reserves or undercollateralization. The protocol was deliberately designed without leverage, lending, or yield-generating schemes that could mess with this ratio.
+
+## On-Chain Reserves
+
+All reserves live on-chain in the DMF smart contract's USDC balance. No off-chain bank accounts, no custodians, no trusted third parties managing the money. Anyone can independently verify the reserves by checking the contract's USDC balance on BaseScan and comparing it to the dmfUSD total supply. No audits needed, no trust required — the proof is right there in the blockchain state.
+
+## Immutable Contracts
+
+The DMF smart contracts are frozen in time. Once deployed, nobody — including the original devs — can change how they work. No admin keys, no upgrade proxies, no ownership functions, no pause mechanisms. This permanence means the protocol's rules are locked forever. Want to verify? Check the contract source on BaseScan — no upgradeable patterns, and the creator has renounced ownership. What you see is what you get, permanently.
+
+## Non-Custodial
+
+DMF is non-custodial through and through. You maintain full sovereignty over your assets at all times. When USDC goes into the contract, it's held by the smart contract itself — not by any company, team, or individual. Nobody can stop you from redeeming your dmfUSD. There's no KYC, no whitelist, no approval process. The protocol treats everyone equally and never plays gatekeeper. This design removes counterparty risk entirely — the only counterparty is the code.
