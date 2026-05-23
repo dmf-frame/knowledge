@@ -35,7 +35,7 @@ backing  = totalFee - devFee
 
 ## Cross-Chain Integration Notes
 
-For cross-chain deposits, the LiFi Composer handles bridging and swaps. There is no separate CCTP service fee — the standard 0.25% variable fee (capped at $20) applies to all minting and burning operations regardless of whether they originate from a direct call or a cross-chain flow.
+For cross-chain deposits, the Composer handles bridging and swaps. There is no separate CCTP service fee — the standard 0.25% variable fee (capped at $20) applies to all minting and burning operations regardless of whether they originate from a direct call or a cross-chain flow.
 
 ## Worked Examples
 

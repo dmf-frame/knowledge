@@ -13,7 +13,7 @@ This comparison shows how dmfUSD differs from major stablecoins in terms of back
 | **Admin keys** | None (owner can renounce) | Circle can freeze | Tether can freeze | Maker governance can freeze |
 | **Fee on trade** | 0.25% ($20 cap) | None on transfer | None on transfer | Stability fee (variable) |
 | **Decimals** | 6 | 6 | 6 | 18 |
-| **Cross-chain** | LiFi | CCTP | Various bridges | Bridges + CCTP |
+| **Cross-chain** | Bridge Protocols | CCTP | Various bridges | Bridges + CCTP |
 | **DeFi composability** | ERC-4626 + ERC-20 | Standard ERC-20 | Standard ERC-20 | Standard ERC-20 |
 | **Liquidation risk** | ✅ None | ✅ None | ✅ None | ⚠️ Yes (CDP) |
 | **Collapse risk** | ✅ None (1:1 redeemable) | ✅ Low (regulated) | ✅ Low | ✅ Low (overcollateralized) |

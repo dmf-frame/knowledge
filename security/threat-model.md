@@ -18,9 +18,9 @@ The contract owner can set the Composer address, update the dev wallet, and chan
 All state-changing functions use OpenZeppelin's `ReentrancyGuard`. Certora formally proved that buy/refund cannot be re-entered. Risk is extremely low.
 
 ### Composer / Integration Risk
-The LiFi Composer address is the only privileged caller (via `onlyComposer` on `buyFromComposer`). If the Composer address is compromised or malicious, it could mint dmfUSD with fabricated USDC data (since the Composer is trusted to deliver USDC before calling).
+The Composer address is the only privileged caller (via `onlyComposer` on `buyFromComposer`). If the Composer address is compromised or malicious, it could mint dmfUSD with fabricated USDC data (since the Composer is trusted to deliver USDC before calling).
 
-**Mitigation**: The Composer is a trusted, audited LiFi contract. Users dealing with cross-chain flows should verify they're using the official DMF app and LiFi routes. Direct Base operations (`buy`/`refund`) are unaffected by Composer state.
+**Mitigation**: The Composer is a trusted, audited contract. Users dealing with cross-chain flows should verify they're using the official DMF app and trusted bridge routes. Direct Base operations (`buy`/`refund`) are unaffected by Composer state.
 
 ## Stablecoin Dependency (USDC)
 
@@ -54,7 +54,7 @@ Users who do not account for the 0.25% fee (capped at $20) may receive less dmfU
 ### Cross-Chain Mistakes
 Sending dmfUSD directly to an unsupported bridge address may result in lost funds. Always use the official DMF app for cross-chain operations.
 
-**Mitigation**: Always use the DMF UI or documented contract interfaces. Do not attempt manual cross-chain interactions with dmfUSD outside of LiFi.
+**Mitigation**: Always use the DMF UI or documented contract interfaces. Do not attempt manual cross-chain interactions with dmfUSD outside of trusted bridge protocols.
 
 ### Wallet / Phishing
 Users approving malicious contracts to spend dmfUSD or USDC could lose funds.

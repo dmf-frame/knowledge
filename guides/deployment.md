@@ -84,8 +84,8 @@ forge verify-contract $CONTRACT_ADDRESS dmfUSD \
 
 ## Step 4: Post-Deployment Setup
 
-### Register the LiFi Composer
-Needed if you're using LiFi for cross-chain swaps:
+### Register the Composer
+Needed if you're using cross-chain swaps:
 
 ```bash
 cast send $DMF_USD_ADDRESS "setComposer(address)" $COMPOSER_ADDRESS \
@@ -124,5 +124,5 @@ Before calling it done, run through this:
 
 - [ ] Contracts deployed and verified on the block explorer
 - [ ] Fee addresses configured correctly
-- [ ] Composer address registered (if using LiFi)
+- [ ] Composer address registered (if using cross-chain)
 - [ ] Ownership renounced (production only — this is permanent!)

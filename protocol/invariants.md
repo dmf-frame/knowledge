@@ -36,7 +36,7 @@ A buy followed by a refund cycle preserves `USDC.balanceOf(this) - fees`. Over a
 
 ## 9. Composer-Only Functions Are Gated
 
-`buyFromComposer()` can only be called by the registered LiFi Composer address. Any other caller triggers a revert. `deposit()` and `redeem()` are public (no `onlyComposer` guard). This is verified by Certora.
+`buyFromComposer()` can only be called by the registered Composer address. Any other caller triggers a revert. `deposit()` and `redeem()` are public (no `onlyComposer` guard). This is verified by Certora.
 
 ## 10. ERC-4626 Surface Consistency
 

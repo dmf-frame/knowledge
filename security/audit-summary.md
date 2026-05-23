@@ -63,7 +63,7 @@ Additionally, the Certora Lean Spec formally proved 3 core invariants: supply no
 
 ## Scope
 
-The audit scope covers the `dmfUSD` contract, its ERC-4626 surface, fee accounting, reserve management, access control, and LiFi Composer integration.
+The audit scope covers the `dmfUSD` contract, its ERC-4626 surface, fee accounting, reserve management, access control, and cross-chain Composer integration.
 
 ## Conclusion
 

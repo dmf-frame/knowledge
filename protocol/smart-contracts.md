@@ -20,7 +20,7 @@ dmfUSD
 
 - **Decimals = 6** — matches USDC, eliminating decimal conversion errors.
 - **No tracked `usdcReserves` variable** — backing is `USDC.balanceOf(address(this))` live. The contract explicitly states: `// NOTE: No tracked usdcReserves — backing = USDC.balanceOf(this) live.`
-- **No admin mint/freeze/pause** — once the Composer is set, only the LiFi Composer can call `buyFromComposer`. There is no admin mint function, no freeze mechanism, and no pause functionality after initial configuration.
+- **No admin mint/freeze/pause** — once the Composer is set, only the Composer can call `buyFromComposer`. There is no admin mint function, no freeze mechanism, and no pause functionality after initial configuration.
 
 ### Primary User Functions
 
@@ -30,7 +30,7 @@ dmfUSD
 
 ### Composer-Only Functions
 
-- `buyFromComposer(buyer, usdcAmount)` — Called by the LiFi Composer to mint dmfUSD on behalf of a user (e.g., after a cross-chain swap arrives). Guarded by `onlyComposer`.
+- `buyFromComposer(buyer, usdcAmount)` — Called by the registered Composer to mint dmfUSD on behalf of a user (e.g., after a cross-chain swap arrives). Guarded by `onlyComposer`.
 
 ### ERC-4626 Surface
 
@@ -49,7 +49,7 @@ The contract also exposes a standard ERC-4626 vault interface for composability:
 | `refund()` / `refundTo()` | nonReentrant | Anyone |
 | `deposit()` | nonReentrant | Anyone |
 | `redeem()` | nonReentrant | Anyone |
-| `buyFromComposer()` | onlyComposer + nonReentrant | Only LiFi Composer |
+| `buyFromComposer()` | onlyComposer + nonReentrant | Only Composer |
 | `setComposer()` | onlyOwner | Owner |
 | `setDevFeeRecipients()` | onlyOwner | Owner |
 | `transferOwnership()` | onlyOwner (Ownable2Step) | Owner |
@@ -71,7 +71,7 @@ This means the backing ratio is always >= 100%, and it increases over time as fe
 
 ## Composer Integration
 
-The contract supports LiFi Composer integration via `buyFromComposer(buyer, usdcAmount)`. This is the only function guarded by `onlyComposer`. When the LiFi Composer receives USDC from a cross-chain swap, it calls `buyFromComposer` to mint dmfUSD directly to the buyer address.
+The contract supports Composer integration via `buyFromComposer(buyer, usdcAmount)`. This is the only function guarded by `onlyComposer`. When the Composer receives USDC from a cross-chain swap, it calls `buyFromComposer` to mint dmfUSD directly to the buyer address.
 
 ## Supply Tracking
 
