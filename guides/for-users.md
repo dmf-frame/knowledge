@@ -23,7 +23,7 @@ Welcome! Here's how to start using dmfUSD — a fully-backed digital dollar that
 1. Open the DMF app and connect your wallet on Arbitrum, Optimism, Ethereum, or another supported chain.
 2. Pick your input token (ETH, USDC, anything supported) and enter the amount.
 3. Choose dmfUSD on Base as your destination.
-4. Confirm the cross-chain route — LiFi handles the bridge and swap automatically behind the scenes.
+4. Confirm the cross-chain route — the DMF app's swap widget handles the bridge and swap automatically behind the scenes.
 5. Receive dmfUSD on Base in one smooth transaction.
 
 ## How to Sell dmfUSD
@@ -39,7 +39,7 @@ Welcome! Here's how to start using dmfUSD — a fully-backed digital dollar that
 
 1. Pick your destination chain and token (say, ETH on Arbitrum).
 2. Enter the dmfUSD amount.
-3. Confirm the cross-chain route — LiFi handles everything.
+3. Confirm the cross-chain route — the DMF app's swap widget handles everything.
 4. Receive your tokens on the destination chain.
 
 ## Fees at a Glance

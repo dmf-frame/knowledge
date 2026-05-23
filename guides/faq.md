@@ -34,11 +34,11 @@ Absolutely. dmfUSD is a standard ERC-20 token with an ERC-4626 vault interface. 
 
 ## 9. How does cross-chain work?
 
-dmfUSD lives on Base. To acquire it from other chains, use the LiFi Widget or Composer (which handles swap + bridge in one transaction). To withdraw, dmfUSD gets burned on Base and the equivalent value is bridged to your destination chain via LiFi.
+dmfUSD lives on Base. To acquire it from other chains, use the DMF app's cross-chain swap feature (which handles swap + bridge in one transaction). To withdraw, dmfUSD gets burned on Base and the equivalent value is bridged to your destination chain.
 
 ## 10. Is dmfUSD permissionless?
 
-Yes. Anyone with USDC can call `buy()` and mint dmfUSD — no KYC, no whitelist, no asking for permission. Cross-chain routes through LiFi might have their own requirements, but the core contract is open to everyone.
+Yes. Anyone with USDC can call `buy()` and mint dmfUSD — no KYC, no whitelist, no asking for permission. The core contract is open to everyone.
 
 ## 11. What's the backing ratio?
 
@@ -46,7 +46,7 @@ It's the total USDC reserves divided by the total dmfUSD supply. Because fees ad
 
 ## 12. Can the admin mint unlimited dmfUSD?
 
-Nope. There's no admin mint function at all. The only way to create dmfUSD is through `buy()` (anyone can call it) or `buyFromComposer()` (LiFi Composer only). This is a structural invariant verified by Certora — it's mathematically guaranteed.
+Nope. There's no admin mint function at all. The only way to create dmfUSD is through `buy()` (anyone can call it) or `buyFromComposer()` (Composer only). This is a structural invariant verified by Certora — it's mathematically guaranteed.
 
 ## 13. What chains are supported?
 

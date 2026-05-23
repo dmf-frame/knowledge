@@ -105,21 +105,21 @@ IDmfUSD(dmfUSDAddress).refundTo(receiverAddress, dmfAmount);
 
 No extra approval needed for refunds — the dmfUSD gets burned straight from your balance.
 
-## Step 5: LiFi Composer Integration (Advanced)
+## Step 5: Composer Integration (Advanced)
 
-If you're routing cross-chain swaps through LiFi Composer, use `buyFromComposer`:
+If you're routing cross-chain swaps through the Composer, use `buyFromComposer`:
 
 ```solidity
-// buyFromComposer (only the registered LiFi Composer can call this)
+// buyFromComposer (only the registered Composer can call this)
 function buyFromComposer(address buyer, uint256 usdcAmount)
     external onlyComposer nonReentrant returns (uint256);
 ```
 
-Regular users calling `buyFromComposer()` will get an `OnlyComposer()` error — that function is reserved for the LiFi pipeline.
+Regular users calling `buyFromComposer()` will get an `OnlyComposer()` error — that function is reserved for the cross-chain swap pipeline.
 
 **Note:** The ERC-4626 `deposit()` and `redeem()` functions are **not** Composer-only. They are public (guarded only by `nonReentrant`). Anyone can call them.
 
-To register the LiFi Composer address:
+To register the Composer address:
 ```solidity
 IDmfUSD(dmfUSDAddress).setComposer(composerAddress);
 ```
@@ -140,7 +140,7 @@ event Withdraw(address indexed caller, address indexed receiver, address indexed
 |---|---|
 | `InvalidAddress()` | You passed a zero address somewhere |
 | `InvalidAmount()` | You passed zero as the amount |
-| `OnlyComposer()` | Someone other than the LiFi Composer tried buyFromComposer |
+|| `OnlyComposer()` | Someone other than the Composer tried buyFromComposer |
 | `OnlyOwner()` | A non-owner tried an admin function |
 | Revert on approve | Not enough USDC approved |
 | Revert on buy | Fee eats more than the remaining balance |
