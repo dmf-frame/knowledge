@@ -6,7 +6,7 @@ This comparison shows how dmfUSD differs from major stablecoins in terms of back
 
 | Aspect | dmfUSD | USDC (Circle) | USDT (Tether) | DAI (Maker) |
 |--------|--------|---------------|---------------|-------------|
-| **Backing type** | 1:1 USDC (on-chain) | 1:1 USD (bank reserves) | 1:1 USD (mixed reserves) | Overcollateralized (ETH, stETH, USDC) |
+| **Backing type** | USDC (on-chain, ratio grows from fees) | 1:1 USD (bank reserves) | 1:1 USD (mixed reserves) | Overcollateralized (ETH, stETH, USDC) |
 | **Reserve model** | Full-reserve | Fractional reserves | Fractional reserves | Overcollateralized |
 | **Mint access** | Anyone with USDC | Circle-only (KYC) | Tether-only (KYC) | Anyone via CDP |
 | **On-chain transparency** | ✅ Full — `totalAssets()` vs `totalSupply()` | ⚠️ Monthly attestations | ⚠️ Quarterly attestations | ✅ Full on-chain |

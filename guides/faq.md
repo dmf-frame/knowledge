@@ -2,7 +2,7 @@
 
 ## 1. What is dmfUSD?
 
-dmfUSD is a fully-backed digital dollar on the Base blockchain. Every dmfUSD token represents a claim on $1 of USDC sitting in an on-chain reserve. Unlike algorithmic stablecoins with complex peg mechanics, dmfUSD is refreshingly simple — it's just USDC with a small fee wrapper around it.
+dmfUSD is a fully-backed digital dollar on the Base blockchain. Unlike a stablecoin — which relies on a peg mechanism, an oracle, or debt — dmfUSD is backed by USDC sitting in an on-chain reserve, and the backing-per-token grows over time as protocol fees accumulate. Every time someone buys or sells dmfUSD, 60% of the fee stays in the contract as additional USDC backing.
 
 ## 2. Is dmfUSD safe?
 
@@ -14,7 +14,7 @@ Send USDC to the dmfUSD contract and call `buy(usdcAmount)`. First you need to a
 
 ## 4. What are the fees?
 
-A 0.25% fee (25 basis points) applies to both buying and selling dmfUSD, capped at $20 per transaction. Of that, 90% stays in the contract as extra backing, and 10% goes to the developer wallet. There are no additional cross-chain fees beyond the standard 0.25%.
+A 0.25% fee (25 basis points) applies to both buying and selling dmfUSD, capped at $20 per transaction. Of that, 60% (0.15%) stays in the contract as additional USDC backing — this is what makes the backing-per-token grow over time. The remaining 40% (0.10%) is minted as dmfUSD for operational costs. There are no additional cross-chain fees beyond the standard 0.25%.
 
 ## 5. Is dmfUSD audited?
 
@@ -22,7 +22,7 @@ Yes, thoroughly. We've tested with Foundry (308M+ scenarios), formally verified 
 
 ## 6. Can I lose money?
 
-dmfUSD is fully backed by USDC, so if everything works as designed, 1 dmfUSD should always be redeemable for roughly 1 USDC (minus the 0.25% fee). The real risks are: USDC losing its peg to $1, a smart contract vulnerability (extremely unlikely given the testing), or Base going down.
+dmfUSD is fully backed by USDC, and the backing ratio grows over time through fee accumulation. At any point, total USDC reserves divided by total dmfUSD supply will be at least 1.0 — and rising. The real risks are: USDC losing its peg to $1 (dmfUSD's underlying collateral becomes less valuable), a smart contract vulnerability (extremely unlikely given the testing), or Base going down.
 
 ## 7. How do I verify the backing?
 

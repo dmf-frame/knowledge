@@ -8,43 +8,45 @@ date: 2025-05-19
 
 # What is DMF?
 
-The **Digital Monetary Framework (DMF)** is a protocol on the Base blockchain that issues **dmfUSD** — a digital dollar that's fully backed, non-custodial, and completely transparent. No trust required, just math.
+The **Digital Monetary Framework (DMF)** is a protocol on the Base blockchain that issues **dmfUSD** — a digital dollar that's fully backed, non-custodial, and whose USDC collateral grows over time. No trust required, just math.
 
 ## So What Exactly is dmfUSD?
 
-Think of dmfUSD as a digital dollar that's always worth exactly what it claims to be. Every single dmfUSD token in circulation is backed 1:1 by USDC locked in a smart contract. The reserves are on-chain and verifiable by anyone, anytime. No lending, no leverage, no fractional reserve tricks — just straight-up, one-to-one backing.
+dmfUSD is not a stablecoin. It doesn't rely on a peg, an oracle, or any debt mechanism. Instead, every dmfUSD in circulation is backed by USDC locked in a smart contract, and the backing-per-token increases as the protocol collects fees.
 
-## How It Works (It's Simple)
+Think of it as a token whose collateral cushion keeps building. When you buy dmfUSD, part of the fee stays in the contract as extra USDC reserves. When someone does a swap through the DMF app, a fraction of that fee also lands in the reserve. The result: the ratio of USDC to dmfUSD is always at least 1.0 and climbs over time.
+
+## How It Works
 
 The protocol does three things:
 
 ### 1. Mint
-You deposit USDC into the DMF smart contract. The contract creates an equal amount of dmfUSD and sends it to your wallet. Put in 1,000 USDC, get 1,000 dmfUSD. There might be a small fee, but the ratio stays true.
+Deposit USDC into the DMF smart contract. The contract creates dmfUSD and sends it to your wallet, minus a 0.25% fee (capped at $20). 60% of that fee stays in the contract as additional USDC backing — it's never borrowed or lent out.
 
 ### 2. Hold
-Your dmfUSD sits in your wallet, doing whatever you want it to. Hold it, send it to a friend, use it in a DeFi app — it's your token. Meanwhile, the USDC you deposited stays in the contract, untouched, unloaned, uninvested.
+Your dmfUSD sits in your wallet. Send it, trade it, use it in DeFi — it's your token. Meanwhile, the USDC you deposited stays in the contract, untouched, unloaned, uninvested.
 
 ### 3. Redeem
-Changed your mind? No problem. At any time, send your dmfUSD back to the contract and get your USDC out. The contract burns the returned dmfUSD (removing it from circulation for good). The whole process is permissionless — no asking, no waiting, no gatekeepers.
+Send your dmfUSD back to the contract and get USDC out. The contract burns the returned dmfUSD. The process is permissionless — no asking, no waiting, no gatekeepers.
 
-## Full Backing (Always)
+## Full Backing (and Growing)
 
-The DMF protocol maintains 100% collateralization at every moment. The total USDC in the contract must always equal or exceed the total dmfUSD supply. This isn't a promise — it's enforced by the contract's code and visible to anyone on a block explorer.
+The DMF protocol maintains at least 100% collateralization at every moment. The total USDC in the contract must always equal or exceed the total dmfUSD supply. And because fees add USDC to the reserve without minting new dmfUSD, the backing ratio grows over time.
 
-Because every dmfUSD is backed by real, liquid USDC, the system can't go insolvent. There's no lending market to fail, no oracle to manipulate, no liquidation cascade. Just solid reserves.
+This isn't a promise — it's enforced by the contract's code and visible to anyone on a block explorer. No lending market to fail, no oracle to manipulate, no liquidation cascade.
 
-## Non-Custodial (Your Keys, Your Coins)
+## Non-Custodial
 
-You stay in complete control. The DMF protocol never touches your private keys. When you deposit USDC and mint dmfUSD, that USDC is held by the smart contract itself — not by any company, admin, or third party. You can redeem your USDC whenever you want, no permission needed.
+You stay in control. The DMF protocol never touches your private keys. When you deposit USDC and mint dmfUSD, that USDC is held by the smart contract — not by any company, admin, or third party.
 
 ## Built on Base
 
-DMF runs on **Base**, the Ethereum Layer 2 blockchain from Coinbase. Base gives you low fees, fast confirmations, and broad ecosystem compatibility. Every DMF operation — minting, sending, redeeming — costs pennies in gas.
+DMF runs on **Base**, the Ethereum Layer 2 blockchain from Coinbase. Low fees, fast confirmations, broad ecosystem compatibility. Every operation — minting, sending, redeeming — costs pennies in gas.
 
-## Immutable Contracts (Set in Stone)
+## Immutable Contracts
 
-The DMF smart contracts have zero admin keys. No upgrade mechanisms. No pause buttons. Once deployed, the rules are fixed forever — not even the original developers can change them. The backing rules, fee logic, and redemption guarantees are permanent.
+The DMF smart contracts have zero admin keys. No upgrade mechanisms. No pause buttons. Once deployed, the rules are permanent — not even the original developers can change them.
 
 ## In a Nutshell
 
-DMF is built around one simple idea: a digital dollar that's always worth a dollar because it's always backed by a dollar of real reserves. Everything is transparent, verifiable, and unchangeable. No lending, no leverage, no trust — just code and math on Base.
+DMF is built around one simple idea: a digital dollar backed by USDC, where the backing ratio grows over time through fee accumulation. Everything is transparent, verifiable, and unchangeable. No lending, no leverage, no trust — just code and math on Base.
