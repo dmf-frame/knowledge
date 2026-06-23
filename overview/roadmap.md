@@ -29,12 +29,12 @@ Right now we're focused on stability, security, and spreading the word. All the 
 
 ## Long-Term Vision
 
-- **Core infrastructure**: We want dmfUSD to become a foundational stable asset for the on-chain economy — a simple, transparent, and reliably backed digital dollar that anyone can verify.
+- **Core infrastructure**: We want dmfUSD to become a foundational backed asset for the on-chain economy — a simple, transparent, and reliably backed digital dollar that anyone can verify.
 - **Ecosystem growth**: Supporting third-party apps built on dmfUSD, from payment solutions to savings tools to on-chain financial products.
 - **Standards development**: Helping shape industry standards for fully-backed digital assets, including best practices for verification and transparency.
 
 ## An Honest Take
 
-DMF isn't trying to be the most complex protocol out there. That's the point. Its strength is simplicity: 1:1 USDC backing, immutability, and non-custodial operation. Every decision on the roadmap reflects that philosophy. We'd rather add the right features than add features for their own sake.
+DMF isn't trying to be the most complex protocol out there. That's the point. Its strength is simplicity: transparent USDC backing, immutability, and non-custodial operation. Every decision on the roadmap reflects that philosophy. We'd rather add the right features than add features for their own sake.
 
 No hard timelines — development depends on community interest, funding, and whatever the regulatory landscape throws at us. But pull requests and community contributions? Always welcome.

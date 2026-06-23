@@ -1,6 +1,6 @@
 ---
 title: DMF Fee Explanation Prompt
-description: Reusable prompt template for explaining DMF protocol fees to users
+description: Reusable prompt template for explaining current DMF fees to users
 audience: ai
 section: agents
 order: 5
@@ -8,48 +8,36 @@ order: 5
 
 # DMF Fee Explanation Prompt
 
-## Fee Structure
+## Current Fee Structure
 
-DMF charges three types of fees:
+DMF has two separate fee contexts. Do not mix them.
 
-### 1. Mint Fee
-- **Rate**: {mintFeeRate} basis points ({mintFeePercent}%)
-- **Applies when**: User deposits collateral to mint stablecoins
-- **Calculation**: `fee = mintAmount * mintFeeRate / 10000`
-- **Destination**: Protocol treasury (`DMFEngine.treasury`)
-- **Example**: Minting 1000 stablecoins at 25 bps → 2.5 stablecoins fee
+## 1. Direct dmfUSD buy/refund on Base
 
-### 2. Redemption Fee
-- **Rate**: {redemptionFeeRate} basis points ({redemptionFeePercent}%)
-- **Applies when**: User burns stablecoins to reclaim collateral
-- **Calculation**: `fee = redeemAmount * redemptionFeeRate / 10000`
-- **Destination**: Protocol treasury
-- **Example**: Redeeming 1000 stablecoins at 10 bps → 1.0 stablecoins fee
+- Total fee: 0.25% of the transaction amount.
+- Cap: $20 maximum per transaction.
+- Backing portion: 0.15% of the transaction amount, retained as USDC backing.
+- Operations portion: 0.10% of the transaction amount.
+- Split of total fee: 60% backing, 40% Operations.
 
-### 3. Liquidation Bonus
-- **Rate**: {liquidationBonusRate} basis points ({liquidationBonusPercent}%)
-- **Applies when**: Position is liquidated
-- **Pays to**: Liquidator as incentive
-- **Paid by**: Position owner (deducted from collateral)
+Example:
 
-## Current Values
-- Mint fee: 25 bps (0.25%)
-- Redemption fee: 10 bps (0.10%)
-- Liquidation bonus: 50 bps (0.50%)
-
-## Visual Breakdown
-```
-Mint 1000 STABLECOIN
-├── Collateral locked: $1500 (at 150% ratio)
-├── Fee (0.25%): 2.5 STABLECOIN
-└── User receives: 997.5 STABLECOIN
-
-Redeem 1000 STABLECOIN
-├── Fee (0.10%): 1.0 STABLECOIN
-├── Collateral returned: ~$666.67
-└── User receives: ~$666.00 worth of collateral (after fee)
+```text
+Buy/refund amount: 1,000 USDC
+Total fee: 2.50 USDC equivalent
+Backing portion: 1.50 USDC
+Operations portion: 1.00 USDC equivalent
 ```
 
-## Fee Governance
-Fee rates are controlled by the DMF DAO governance.
-Users can check current rates via `DMFEngine.mintFeeRate()` and `DMFEngine.redemptionFeeRate()`.
+## 2. Multi-chain swap/support context
+
+- DMF backing fee: 0.04% routed to dmfUSD backing.
+- Route/provider costs vary by live route.
+- Do not invent total route fees. Use the live app/API value.
+
+## User-Facing Rules
+
+- Use “Operations”.
+- Do not say fees are claimed automatically.
+- Do not describe dmfUSD as a stablecoin or peg.
+- Do not mention liquidation, oracle, debt, or collateral-ratio fees.

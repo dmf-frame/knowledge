@@ -15,7 +15,7 @@ Core functionality validation covering all public and restricted functions, acce
 18 fuzz tests each running 10,000,000 iterations. Tested buy, refund, deposit, redeem, fee calculations, reentrancy safety, access control, and preview consistency across random inputs.
 
 ### 3. Stateful Invariant Tests (128M+ function calls)
-8 invariant tests with 1,000,000 runs each at depth 20 (20 sequential operations per run). Tested solvency, reserve accuracy, fee bounds, fee split integrity, dev fee structure, and ERC-4626 consistency across arbitrary multi-step sequences.
+8 invariant tests with 1,000,000 runs each at depth 20 (20 sequential operations per run). Tested solvency, reserve accuracy, fee bounds, fee split integrity, Operations fee structure, and ERC-4626 consistency across arbitrary multi-step sequences.
 
 ## Test Configuration
 
@@ -42,7 +42,7 @@ invariant = { runs = 1000000, depth = 20 }
 - `buy_increases_totalSupply` — supply tracking correctness
 - `mint_burn_symmetry` — buy+refund cycles preserve reserves
 - `permit_approval` — EIP-2612 signature verification correct
-- `onlyComposer_cannot_be_called_by_user` — buyFromComposer gated
+- `privileged_route_cannot_be_called_by_user` — privileged route entrypoint gated
 - `deposit_and_redeem_public_access` — deposit/redeem are public
 
 Additionally, the Certora Lean Spec formally proved 3 core invariants: supply not underflow, fee cap validity, and fee split consistency.
@@ -57,13 +57,13 @@ Additionally, the Certora Lean Spec formally proved 3 core invariants: supply no
 
 ### Aderyn (Cyfrin)
 - 3 low-severity findings — cosmetic, no code changes required:
-  - Centralization risk (owner controls setComposer — by design)
+  - Centralization risk (owner controls setup function — by design)
   - Large numeric literal formatting
   - Unchecked return value (emitted in event)
 
 ## Scope
 
-The audit scope covers the `dmfUSD` contract, its ERC-4626 surface, fee accounting, reserve management, access control, and cross-chain Composer integration.
+The audit scope covers the `dmfUSD` contract, its ERC-4626 surface, fee accounting, reserve management, access control, and cross-chain routing integration.
 
 ## Conclusion
 

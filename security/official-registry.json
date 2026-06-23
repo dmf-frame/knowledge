@@ -1,0 +1,63 @@
+{
+  "version": "1.0.0",
+  "updated": "2026-06-22",
+  "chain_id": 8453,
+  "chain_name": "Base Mainnet",
+  "contracts": {
+    "dmfUSD": {
+      "address": "0x624624fd3821d5f4f8f799369727f08d8219ce58",
+      "type": "ERC-20 Token",
+      "description": "Official dmfUSD token contract. Immutable full-reserve USDC backing.",
+      "risk": "LOW"
+    }
+  },
+  "domains": {
+    "primary": {
+      "host": "dmfam.org",
+      "url": "https://dmfam.org",
+      "description": "Official DMF website",
+      "risk": "LOW"
+    },
+    "app": {
+      "host": "app.dmfam.org",
+      "url": "https://app.dmfam.org",
+      "description": "Official DMF application (swap, bridge)",
+      "risk": "LOW"
+    }
+  },
+  "official_paths": [
+    "/white-paper",
+    "/security",
+    "/about"
+  ],
+  "social_handles": {
+    "twitter": [
+      "dmf_frame"
+    ],
+    "telegram_bot": [
+      "SofiaDMF_bot"
+    ]
+  },
+  "typosquat_patterns": [
+    "dmfam0rg",
+    "dmfam-org",
+    "dmfam-app",
+    "dmfam-app.com",
+    "dmfam-claim",
+    "dmfam-claim.net",
+    "dmfam.net",
+    "dmfam.io",
+    "dmf-usd",
+    "dmfusd-claim",
+    "claim-dmf",
+    "dmf-verify",
+    "dmfsupport"
+  ],
+  "impersonation_handle_patterns": [
+    "dmf_framee",
+    "dmf_support",
+    "dmfverify",
+    "dmf_official",
+    "dmfsupport_official"
+  ]
+}

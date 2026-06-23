@@ -1,6 +1,6 @@
 ---
 title: DMF Security Review Prompt
-description: Reusable prompt template for security review of DMF-related code and interactions
+description: Reusable prompt template for security review of current DMF integrations
 audience: ai
 section: agents
 order: 6
@@ -9,39 +9,53 @@ order: 6
 # DMF Security Review Prompt
 
 ## Review Scope
-Analyze the following {codeType} for security issues related to DMF protocol integration.
+
+Analyze the following {codeType} for security issues related to current dmfUSD integration.
 
 ## Security Checklist
 
-### Smart Contract Interactions
+### Contract And Address Safety
+
 - [ ] Are all contract addresses verified against official DMF deployment addresses?
-- [ ] Is the `approve`/`allowance` pattern followed correctly? (check for race conditions)
-- [ ] Are return values from `transfer`/`transferFrom` checked?
-- [ ] Are reentrancy guards in place for external calls?
-- [ ] Is `msg.value` handled correctly for payable functions?
+- [ ] Is the app using Base network for dmfUSD interactions?
+- [ ] Are USDC and dmfUSD decimals handled correctly?
+- [ ] Are return values and failed transactions handled safely?
 
-### Oracle Safety
-- [ ] Is the oracle price checked for staleness (`DMFOracle.isStale()`)?
-- [ ] Is a deviation tolerance applied (e.g., refuse >5% change within 1 block)?
-- [ ] Are fallback oracles configured if primary fails?
+### Buy / Refund Flow Safety
 
-### Economic Security
-- [ ] Do mint/redeem amounts respect minimum/maximum limits?
-- [ ] Is the collateral ratio validated against the liquidation threshold?
-- [ ] Are fee-on-transfer tokens handled correctly?
-- [ ] Is there a circuit breaker or pause mechanism?
+- [ ] Is USDC allowance checked before buy?
+- [ ] Is dmfUSD balance checked before refund?
+- [ ] Are displayed fees consistent with 0.25% capped at $20 for direct buy/refund?
+- [ ] Is the 60% backing / 40% Operations split described correctly when shown?
+
+### Backing Verification
+
+- [ ] Is backing calculated from live USDC balance of the dmfUSD contract?
+- [ ] Is total supply read from the dmfUSD contract?
+- [ ] Does the UI avoid implying a fixed peg or market-price guarantee?
 
 ### Integration Security
-- [ ] Are RPC endpoints using HTTPS/WSS?
-- [ ] Are private keys stored in environment variables, not code?
-- [ ] Are gas limits set with safety margins (+20% minimum)?
-- [ ] Are failed transactions retried with exponential backoff?
 
-## Risk Assessment
-Rate each finding: CRITICAL (loss of funds), HIGH (protocol manipulation), MEDIUM (users could lose small amounts), LOW (best practice violation).
+- [ ] Are RPC endpoints using HTTPS/WSS?
+- [ ] Are private keys stored outside code?
+- [ ] Are secrets excluded from logs and client bundles?
+- [ ] Are route quotes refreshed before transaction submission?
+
+## Explicit Non-Findings For Current dmfUSD
+
+Do not review current dmfUSD as if it has:
+
+- oracle price feeds,
+- debt positions,
+- collateral-ratio thresholds,
+- liquidation flows,
+- pause/circuit-breaker mechanics.
+
+If these appear in docs or code comments, flag them as stale/outdated content.
 
 ## Output Format
-```
+
+```text
 ## Findings Summary
 - Critical: {count}
 - High: {count}
@@ -49,5 +63,5 @@ Rate each finding: CRITICAL (loss of funds), HIGH (protocol manipulation), MEDIU
 - Low: {count}
 
 ## Detailed Findings
-1. **[SEVERITY] Title** — Description, impact, recommendation.
+1. [SEVERITY] Title, description, impact, recommendation.
 ```

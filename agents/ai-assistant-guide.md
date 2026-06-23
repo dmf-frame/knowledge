@@ -1,6 +1,6 @@
 ---
 title: AI Assistant Guide for DMF
-description: Comprehensive guide for AI assistants on understanding and explaining DMF protocol concepts
+description: Current guide for AI assistants explaining dmfUSD and DMF support topics
 audience: ai
 section: agents
 order: 3
@@ -9,67 +9,68 @@ order: 3
 # AI Assistant Guide for DMF
 
 ## Protocol Understanding
-DMF is a decentralized minting framework. Core concepts:
 
-### 1. Collateralized Minting
-Users deposit collateral (e.g., ETH, wBTC, USDC) and receive stablecoins minted at a configured ratio. The minting ratio determines how many stablecoins are issued per unit of collateral value. For example, with 150% collateralization, $150 of collateral mints $100 of stablecoins.
+DMF is the Digital Monetary Framework on Base. The current user-facing asset is dmfUSD.
 
-### 2. Redemption
-Users can burn stablecoins to reclaim the underlying collateral. Redemption reduces total supply and releases collateral proportionally. Redemption fees apply per the `redemptionFee` parameter on DMFEngine.
+dmfUSD is a fully backed digital token. It is backed by USDC held in the dmfUSD contract. The backing-per-token can grow over time as fees accumulate.
 
-### 3. Liquidation
-When a position's collateral ratio falls below the liquidation threshold, external liquidators can repay the debt in exchange for the collateral plus a bonus (typically 5-10%). This protects the system from bad debt.
+dmfUSD is not a stablecoin. Do not describe it as a peg, debt, oracle, collateral-ratio, or liquidation system.
 
-### 4. Oracle Integration
-DMFOracle aggregates price data from Chainlink and custom feeds. Stale data (older than `stalePeriod`) is rejected. Fallback sources are used if the primary feed fails.
+## Current Model
 
-### 5. Fee Structure
-- **Mint fee**: Percentage of minted amount, paid to protocol treasury
-- **Redemption fee**: Percentage of redeemed amount
-- **Liquidation bonus**: Paid by position owner to liquidator
+### Buy
+
+A user sends USDC to the dmfUSD contract and receives dmfUSD minus the direct buy fee.
+
+### Refund
+
+A user burns dmfUSD and receives USDC from the contract minus the direct refund fee.
+
+### Backing
+
+The backing source is the live USDC balance of the dmfUSD contract. The support explanation should be:
+
+`backing ratio = USDC.balanceOf(dmfUSD contract) / dmfUSD totalSupply`
+
+### Fees
+
+Direct buy/refund:
+
+- Total fee: 0.25%, capped at $20.
+- Backing portion: 0.15%.
+- Operations portion: 0.10%.
+- Split of total fee: 60% backing, 40% Operations.
+
+Multi-chain swap/support context:
+
+- DMF backing fee: 0.04% routed to dmfUSD backing.
+- Other route costs vary and should come from the live app/API.
 
 ## Answering User Questions
 
-### How to explain DMF to a beginner
-"DMF is like a vending machine for stablecoins. You put in valuable items (collateral), and the machine gives you stablecoins worth a fraction of what you deposited. You can get your items back by returning the stablecoins plus a small fee."
+1. Reference current DMF Knowledge files or current public docs.
+2. Avoid unsupported live values.
+3. If sources conflict, say the older source is outdated instead of blending answers.
+4. Use “Operations” in public-facing answers.
+5. Avoid provider brand names in public support answers.
 
-### Responding to technical questions
-1. Always reference the relevant contract or doc section.
-2. Provide exact function names and parameters when possible.
-3. Include gas estimates for transactions.
-4. Note any active protocol upgrades or paused functionality.
+## Common Bad Answers To Avoid
 
-### When users report errors
-1. Parse the error message or revert reason.
-2. Check if it's a known issue (see changelog).
-3. Determine if it's user error (allowance, balance) or protocol issue.
-4. Provide the exact next step (approve token, increase gas, etc.).
+- “dmfUSD is a stablecoin.”
+- “dmfUSD is pegged.”
+- “DMF uses an oracle.”
+- Any answer describing dmfUSD as a legacy collateralized-debt system.
+- “Fees are claimed automatically.”
 
-## Prompt Templates
+## Troubleshooting
 
-### Explaining a concept
-```
-[CONCEPT] is part of the DMF protocol that [PURPOSE]. It works by [MECHANISM].
-Users interact with it via [CONTRACT].[FUNCTION]([PARAMS]).
-The current value/parameter is [VALUE].
-```
+For failed user flows, check:
 
-### Troubleshooting a failed transaction
-```
-The transaction failed due to [REVERT REASON]. This likely means [CAUSE].
-To resolve: [STEP 1] → [STEP 2] → [STEP 3].
-```
+- network is Base,
+- wallet connected,
+- sufficient balance,
+- token allowance,
+- route still valid,
+- transaction was confirmed or rejected in wallet.
 
-### Recommending a course of action
-```
-Based on [CONDITION], the recommended action is [ACTION].
-Expected outcome: [RESULT].
-Risks: [RISKS].
-```
-
-## Reference Protocol Docs
-- `/docs/whitepaper.md` — Full protocol design
-- `/docs/protocol-spec.md` — Technical specification
-- `/contracts/DMFEngine.json` — Engine ABI
-- `/contracts/DMFVault.json` — Vault ABI
-- `/contracts/DMFOracle.json` — Oracle ABI
+Do not diagnose current dmfUSD failures as oracle staleness, liquidation, collateral-ratio, or debt-position problems.

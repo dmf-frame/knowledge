@@ -1,0 +1,103 @@
+**DMF Mentor Research & Development Plan — Brainstorm and Execution Roadmap**
+
+The attached research intake documents outline a coherent, phased expansion of the DMF Mentor from its current Phase 1 implementation (Sofia Telegram bot) into a full **Agent-for-Agents** platform. This includes machine-readable APIs, scam detection, truth enforcement via a correction engine, and social monitoring. The UnRugable integration is a high-value, immediate addition that reinforces the shared “safe-by-design, immutable, USDC-collateralized” narrative across your projects (DMF and UnRugable Chaos).
+
+I have completed the highest-priority deliverable first. All research synthesizes primary sources (GitHub repository, contract source, verification tooling, and official site) with the background you provided.
+
+### 1. Completed: UnRugable Chaos Research Digest
+
+**File saved to:** 
+
+**Key Content Delivered:**
+- Full project overview and philosophy alignment with DMF/dmfUSD.
+- Detailed architecture (UnrugableToken contract mechanics, factory role, immutable/renounced design, constructor parameters for verification).
+- Precise USDC backing, redemption math, and **inverse bank run** implementation (0.5% retained backing boost on refunds + supply reduction creates self-reinforcing price support).
+- Fee mechanics table with direct comparison to DMF’s fee-to-backing flywheel.
+- Security posture (internal 230M+ scenario Foundry testing; no public third-party audit located; reliance on immutability + verifiable source).
+- Scam detection patterns tailored to UnRugable (fake tokens via constructor mismatch, phishing sites, impersonation, fake airdrops/claims).
+- Ready-to-use FAQ entries for DMF Mentor.
+- Official links and address registry (including fixed constructor args for /verify extension and example verified token).
+
+**Expected Outcome:** DMF Mentor can now accurately answer cross-project queries (“Is this related to 0xMarZel’s other project?”), extend `/verify` to UnRugable tokens, detect related scams with unified logic, and educate users on complementary safe tokenomics. This strengthens the holistic “authoritative source for all 0xMarZel projects” positioning.
+
+**Integration Notes:** Add the digest to your main DMF knowledge Git (`~/dmf-knowledge/`). Future updates should track any published factory address or new popular tokens. Potential long-term synergy: support dmfUSD as a backing asset for UnRugable launches (passing DMF’s growing-backing mechanic downstream).
+
+### 2. Prioritized Execution Roadmap for Remaining Research Intakes
+
+I recommend the following order, aligned with your stated phases. High-priority items unlock immediate user value and scam protection; medium items build the “truth firewall” and monitoring layer.
+
+**High Priority (Phase 1.5–2)**
+
+**Research-DMF-Scam-Detection.md**  
+**What:** Define robust `/verify` command logic for contract addresses, links, and admin impersonation. Establish risk matrix (LOW/MEDIUM/HIGH/CRITICAL), on-chain registry patterns, and response formats (human + machine-readable JSON).  
+**How:** 
+- Leverage existing DMF contract addresses you provided (dmfUSD, Dev Vault, deployer).
+- Extend UnRugable verification pattern (constructor arg matching + renounced ownership + BaseScan verified source).
+- Use BaseScan/Blockscout APIs (or on-chain events) for live checks; maintain lightweight local allow/deny lists in the knowledge Git.
+- Study patterns from MetaMask phishing detection and open lists (CryptoScamDB, Chainabuse) but keep implementation self-contained and auditable.  
+**Expected Outcome:** Production-ready `/verify` specification + pseudocode or reference implementation. Unified scam taxonomy covering both DMF and UnRugable. Machine-readable warning schema for the future Agent API.  
+**Dependencies:** UnRugable digest (now complete); existing Sofia bot patterns.
+
+**Research-Agent-API-Design.md & Research-Agent-for-Agents-Protocol.md** (treated together)  
+**What:** Design lightweight, bot-facing REST API (`/ask`, `/verify-address`, `/verify-link`, `/correct-answer`, `/agent-guide`) with authentication, rate limiting, structured JSON responses (JSON Schema / OpenAPI), and documentation standards (agent.json or llms.txt style). Define how other agents/bots/wallets consume verified DMF intelligence programmatically.  
+**How:** 
+- Build on Hermes Agent’s existing FastAPI gateway pattern (already used in your stack).
+- Use Pydantic models for request/response schemas; enforce same quality/grounding as Sofia via RAG over the knowledge Git + 500 Q&A dataset.
+- Auth: API keys (per-agent) with tiered rate limits (higher than Telegram per-user limits). Optional JWT for advanced clients. CORS restricted to known agent origins.
+- Caching: Redis or in-memory for frequent queries; versioned knowledge base to keep corrections current.
+- Documentation: Auto-generated OpenAPI/Swagger + human-readable agent guide endpoint.  
+**Expected Outcome:** Complete API specification document + minimal viable server skeleton (FastAPI). Clear separation of concerns so the same knowledge layer powers Sofia (Telegram) and external agents. Rate-limit and pricing model recommendations (free tier with limits; paid high-volume keys).  
+**Dependencies:** Scam detection spec; correction engine patterns; existing 500 Q&A dataset for grounding examples.
+
+**Medium Priority (Phase 3–4)**
+
+**Research-Correction-Engine.md**  
+**What:** “Truth firewall” architecture that detects incorrect claims about DMF/UnRugable (e.g., “algorithmic stablecoin”, wrong chain count, oracle/liquidation misconceptions) and returns verified corrections. Include confidence scoring, wrong-claim blacklist, versioning of the knowledge base, and proactive vs reactive modes.  
+**How:** 
+- Mine the 500 Q&A dataset (and live Sofia interactions) for common hallucinations.
+- Implement as a post-processing or parallel layer: compare incoming claims against canonical facts in the knowledge Git.
+- Response formats: natural language for users + structured JSON (claim, correction, confidence, source refs) for bot clients.
+- Versioning: Git-backed knowledge with semantic versioning or commit-hash tagging so corrections stay synchronized as the protocol evolves.  
+**Expected Outcome:** Correction engine design doc + sample wrong-claim dataset + pseudocode for detection/correction pipeline. Integration points with the Agent API (`/correct-answer` endpoint) and monitoring layer.  
+**Dependencies:** Structured knowledge base (including new UnRugable digest); API response schemas.
+
+**Research-Social-Monitoring.md**  
+**What:** Monitoring layer for Telegram, X, and web mentions of DMF/UnRugable to detect scams, misinformation, and impersonation accounts in near real-time or batch mode.  
+**How:** 
+- Telegram: Bot API or MTProto for keyword/channel monitoring (respect rate limits; focus on official + high-risk groups).
+- X: Free-tier search or semantic monitoring via available tools; track name similarity + profile signals for impersonators.
+- Storage: Lightweight SQLite schema for flagged mentions with human-review queue.
+- Detection: Keyword + ML classification hybrids; false-positive mitigation via allow-lists and confidence thresholds.
+- Presentation: Admin dashboard or digest for review before any automated action.  
+**Expected Outcome:** Monitoring architecture document + database schema + sample detection ruleset. Phased rollout recommendation (start with X + key Telegram channels).  
+**Dependencies:** Scam taxonomy from detection research; correction engine for drafting responses.
+
+### 3. Cross-Cutting Recommendations & Enabling Assets
+
+- **500 Q&A Dataset:** This is extremely high-value. Import it into the vault immediately (as discussed). Use it for:
+  - RAG grounding of all Mentor responses (ensures Sofia-quality answers even via API).
+  - Fine-tuning or continued pre-training of a smaller local model (Qwen3-class) for offline/edge Mode of DMF Mentor.
+  - Synthetic data generation for the correction engine and scam detection training.
+
+- **Local-First & Hermes Integration:** Design every component (API, correction, monitoring) to run fully locally where possible, leveraging your i9/64 GB/RTX 1660 stack, Qwen models, and Obsidian vault patterns. The Agent API can expose the same local instance.
+
+- **Security & Quality Bar:** Apply the same max-security posture you defined for the ZK Vault/Privacy Wallet (WebAuthn step-up where relevant, strict CSP/Trusted Types for any web surfaces, supply-chain controls). All machine-readable outputs must be schema-validated.
+
+- **Versioning & Maintainability:** Keep the DMF knowledge Git as the single source of truth. Every digest or spec should reference commit hashes or version tags.
+
+### 4. Expected Overall Outcome
+
+Upon completion of this roadmap:
+- DMF Mentor evolves from a single Telegram interface into a **verifiable intelligence layer** that other agents, wallets, and bots can trust and call programmatically.
+- Scam surface area for both DMF and UnRugable is materially reduced through proactive `/verify`, correction, and monitoring.
+- Your “safe by design” philosophy is consistently communicated and defended across projects, strengthening user trust and differentiation versus oracle-dependent or admin-controlled alternatives.
+- The system becomes self-improving: corrections and monitoring findings feed back into the knowledge base, improving future answers.
+
+This plan is actionable, respects your local/privacy-first preferences, and directly supports the Ignitus/DMF/UnRugable ecosystem goals. 
+
+Would you like me to:
+- Begin drafting the Scam Detection specification or Agent API OpenAPI schema next?
+- Create a consolidated project board / task list (e.g., in Markdown or as a simple script)?
+- Research any specific technical detail further (e.g., exact USDC contract confirmation, factory address discovery via on-chain analysis, or integration patterns with existing Hermes FastAPI)?
+
+I am ready to execute the next piece immediately.

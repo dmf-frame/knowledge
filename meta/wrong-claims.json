@@ -1,0 +1,287 @@
+{
+  "version": "1.0.0",
+  "updated": "2026-06-24",
+  "claims": [
+    {
+      "id": "wc-001",
+      "patterns": [
+        "dmfUSD is an algorithmic stablecoin",
+        "dmfUSD is algorithmic",
+        "algorithmic stablecoin dmfUSD",
+        "dmfUSD uses algorithmic mechanics"
+      ],
+      "correct_fact": "dmfUSD is fully collateralized 1:1 by USDC in an immutable contract. No algorithm controls supply.",
+      "severity": "high",
+      "scam_risk": true,
+      "sources": ["overview/what-is-dmf.md", "protocol/invariants.md", "reference/comparison/common-defi-mechanics-and-risks.md"]
+    },
+    {
+      "id": "wc-002",
+      "patterns": [
+        "dmfUSD uses oracles",
+        "dmfUSD oracle",
+        "oracle for collateral valuation",
+        "price oracle dmfUSD"
+      ],
+      "correct_fact": "No oracles are used. Backing is direct USDC held on-chain and verifiable via USDC.balanceOf(dmfUSD contract).",
+      "severity": "high",
+      "scam_risk": true,
+      "sources": ["overview/what-is-dmf.md", "protocol/invariants.md"]
+    },
+    {
+      "id": "wc-003",
+      "patterns": [
+        "dmfUSD has liquidation",
+        "liquidation mechanics",
+        "dmfUSD can be liquidated",
+        "liquidated if backing drops"
+      ],
+      "correct_fact": "There are no liquidations. Holders can always redeem dmfUSD directly for USDC at the current backing ratio.",
+      "severity": "high",
+      "scam_risk": true,
+      "sources": ["overview/what-is-dmf.md", "reference/comparison/vs-traditional-stablecoins.md", "reference/comparison/common-defi-mechanics-and-risks.md"]
+    },
+    {
+      "id": "wc-004",
+      "patterns": [
+        "strict 1:1 peg at all times",
+        "fixed 1:1 peg",
+        "dmfUSD is pegged",
+        "dmfUSD maintains a peg"
+      ],
+      "correct_fact": "dmfUSD is NOT a stablecoin. Backing starts at 1:1 USDC but grows over time as fees accumulate in the reserve.",
+      "severity": "medium",
+      "scam_risk": false,
+      "sources": ["overview/what-is-dmf.md", "guides/faq.md"]
+    },
+    {
+      "id": "wc-005",
+      "patterns": [
+        "migrate to a new dmfUSD contract",
+        "upgrade your dmfUSD",
+        "new dmfUSD contract migration",
+        "must migrate dmfUSD"
+      ],
+      "correct_fact": "No migration is required or exists. The current dmfUSD contract is immutable. Any migration request is a scam.",
+      "severity": "critical",
+      "scam_risk": true,
+      "sources": ["protocol/smart-contracts.md", "security/threat-model.md"]
+    },
+    {
+      "id": "wc-006",
+      "patterns": [
+        "dmfUSD is available on 70+ chains",
+        "dmfUSD on every chain",
+        "dmfUSD deployed on Ethereum mainnet",
+        "dmfUSD on all chains"
+      ],
+      "correct_fact": "dmfUSD is deployed on Base Mainnet only. Cross-chain access is via swap/bridge routes — the token contract itself is on Base.",
+      "severity": "medium",
+      "scam_risk": true,
+      "sources": ["protocol/addresses.md", "reference/chain-config.md"]
+    },
+    {
+      "id": "wc-007",
+      "patterns": [
+        "LI.FI",
+        "Relay Protocol",
+        "uses LI.FI for swaps",
+        "powered by Relay"
+      ],
+      "correct_fact": "Do not name external bridge or swap providers in DMF support answers. Describe on-chain mechanics and the DMF app only.",
+      "severity": "low",
+      "scam_risk": false,
+      "sources": ["agents/ai-assistant-guide.md"]
+    },
+    {
+      "id": "wc-008",
+      "patterns": [
+        "frozen or seized by admins",
+        "dmfUSD can be frozen",
+        "admins can seize",
+        "freeze your dmfUSD"
+      ],
+      "correct_fact": "The protocol has no admin keys capable of freezing or seizing user funds. Contracts are immutable after deployment.",
+      "severity": "high",
+      "scam_risk": true,
+      "sources": ["protocol/smart-contracts.md", "security/audit-summary.md"]
+    },
+    {
+      "id": "wc-009",
+      "patterns": [
+        "dmfUSD is a stablecoin",
+        "stablecoin called dmfUSD",
+        "dmfUSD stablecoin"
+      ],
+      "correct_fact": "dmfUSD is NOT a stablecoin. It is fully backed by USDC with backing-per-token that grows as fees accumulate.",
+      "severity": "high",
+      "scam_risk": false,
+      "sources": ["overview/what-is-dmf.md", "agents/ai-assistant-guide.md", "reference/comparison/common-defi-mechanics-and-risks.md"]
+    },
+    {
+      "id": "wc-010",
+      "patterns": [
+        "fee automatically backs",
+        "automatically backs dmfUSD",
+        "fees are automatic",
+        "automatic fee allocation"
+      ],
+      "correct_fact": "Fees are claimed, not automatic. The 0.25% buy/sell fee (capped at $20) splits 60% to USDC reserve and 40% minted as dmfUSD for operations.",
+      "severity": "medium",
+      "scam_risk": false,
+      "sources": ["protocol/fee-mechanism.md", "education/understanding-fees.md"]
+    },
+    {
+      "id": "wc-011",
+      "patterns": [
+        "connect your wallet to verify",
+        "connect wallet to protect your funds",
+        "verify holdings to claim",
+        "connect to the new secure bridge"
+      ],
+      "correct_fact": "DMF official support never asks you to connect your wallet or share seed phrases via DM or unsolicited links. This is a common scam pattern.",
+      "severity": "critical",
+      "scam_risk": true,
+      "sources": ["security/threat-model.md", "research/dmf-scam-detection-rules.md"]
+    },
+    {
+      "id": "wc-012",
+      "patterns": [
+        "dmfUSD peg can break",
+        "peg can break",
+        "depeg dmfUSD",
+        "lose the peg"
+      ],
+      "correct_fact": "dmfUSD does not use a peg mechanism. It is fully backed by USDC; backing-per-token grows over time through fee allocation.",
+      "severity": "high",
+      "scam_risk": true,
+      "sources": ["overview/what-is-dmf.md", "reference/comparison/vs-traditional-stablecoins.md"]
+    },
+    {
+      "id": "wc-013",
+      "patterns": [
+        "collateralized debt",
+        "CDP mechanism",
+        "debt position",
+        "collateral ratio liquidation"
+      ],
+      "correct_fact": "dmfUSD does not use a collateralized-debt or CDP model. It is a full-reserve token backed by USDC in an immutable vault.",
+      "severity": "high",
+      "scam_risk": false,
+      "sources": ["overview/key-concepts.md", "agents/bot-integration-guide.md"]
+    },
+    {
+      "id": "wc-014",
+      "patterns": [
+        "0.5% buy fee",
+        "1% fee on buy",
+        "5% fee",
+        "no fee cap"
+      ],
+      "correct_fact": "Direct buy/sell fee is 0.25%, capped at $20. Split: 60% to USDC reserve, 40% minted as dmfUSD. Backing fee: 0.04%. Solver fee: 0.06-0.11%.",
+      "severity": "medium",
+      "scam_risk": false,
+      "sources": ["protocol/fee-mechanism.md", "education/understanding-fees.md"]
+    },
+    {
+      "id": "wc-015",
+      "patterns": [
+        "72 chains for dmfUSD contract",
+        "dmfUSD native on 72 chains",
+        "dmfUSD exists on Arbitrum natively"
+      ],
+      "correct_fact": "72 chains refers to swap/bridge route support via the DMF app — not native dmfUSD contract deployments. The token contract is on Base Mainnet.",
+      "severity": "medium",
+      "scam_risk": true,
+      "sources": ["reference/chain-config.md", "protocol/addresses.md"]
+    },
+    {
+      "id": "wc-016",
+      "patterns": [
+        "airdrop claim dmfUSD",
+        "free dmfUSD airdrop",
+        "claim your dmfUSD reward",
+        "DMF airdrop link"
+      ],
+      "correct_fact": "DMF does not conduct airdrops via unsolicited links or third-party claim sites. Unsolicited airdrop claims are scams.",
+      "severity": "critical",
+      "scam_risk": true,
+      "sources": ["research/dmf-scam-detection-rules.md", "security/threat-model.md"]
+    },
+    {
+      "id": "wc-017",
+      "patterns": [
+        "admin keys can change",
+        "upgradeable contract",
+        "proxy upgrade dmfUSD",
+        "contracts can be upgraded"
+      ],
+      "correct_fact": "DMF smart contracts are immutable with no upgrade mechanisms, pause buttons, or admin mint functions after deployment.",
+      "severity": "high",
+      "scam_risk": true,
+      "sources": ["protocol/smart-contracts.md", "overview/what-is-dmf.md"]
+    },
+    {
+      "id": "wc-018",
+      "patterns": [
+        "dmfUSD is custodial",
+        "DMF holds your keys",
+        "custodial wallet dmfUSD"
+      ],
+      "correct_fact": "dmfUSD is non-custodial. Users control their own wallets. USDC backing is held by the immutable smart contract, not by any company or admin.",
+      "severity": "medium",
+      "scam_risk": false,
+      "sources": ["overview/what-is-dmf.md", "guides/for-users.md"]
+    },
+    {
+      "id": "wc-019",
+      "patterns": [
+        "backing fee is 0.25%",
+        "solver fee is 0.25%",
+        "backing fee 0.15%"
+      ],
+      "correct_fact": "Direct buy/sell: 0.25% (capped $20). Backing fee on routes: 0.04%. Solver fee: 0.06-0.11%. Do not conflate these fee types.",
+      "severity": "medium",
+      "scam_risk": false,
+      "sources": ["protocol/fee-mechanism.md", "education/understanding-fees.md"]
+    },
+    {
+      "id": "wc-020",
+      "patterns": [
+        "share your seed phrase",
+        "send your private key",
+        "recovery phrase for verification",
+        "mnemonic for DMF support"
+      ],
+      "correct_fact": "DMF official support NEVER asks for seed phrases, private keys, or mnemonics. Sharing these will result in total loss of funds.",
+      "severity": "critical",
+      "scam_risk": true,
+      "sources": ["security/threat-model.md", "agents/prompts/security-guidelines.md"]
+    },
+    {
+      "id": "wc-021",
+      "patterns": [
+        "dmfUSD lending",
+        "lend your dmfUSD",
+        "USDC is lent out",
+        "lending market backing"
+      ],
+      "correct_fact": "USDC backing is never lent, borrowed, or invested. It stays in the immutable contract untouched.",
+      "severity": "high",
+      "scam_risk": false,
+      "sources": ["overview/what-is-dmf.md", "protocol/invariants.md"]
+    },
+    {
+      "id": "wc-022",
+      "patterns": [
+        "only 1 chain supported",
+        "single chain only no bridge",
+        "no cross-chain support"
+      ],
+      "correct_fact": "DMF supports 72 chains for swap and bridge routes via the DMF app. The dmfUSD token contract itself is on Base Mainnet.",
+      "severity": "low",
+      "scam_risk": false,
+      "sources": ["reference/chain-config.md", "guides/for-users.md"]
+    }
+  ]
+}

@@ -20,7 +20,7 @@ The total fee per transaction must never exceed `MAX_VARIABLE_FEE_USDC` ($20). T
 
 ## 5. Fee Split Integrity
 
-The dev fee + backing fee must always equal the total fee. With the current parameters: dev fee = 10 bps, backing fee = 15 bps, total = 25 bps. This holds across all amounts including at the cap boundary.
+The Operations fee + backing fee must always equal the total fee. With the current parameters: Operations fee = 10 bps, backing fee = 15 bps, total = 25 bps. This holds across all amounts including at the cap boundary.
 
 ## 6. Buy Increases Total Supply
 
@@ -34,9 +34,9 @@ When `refund()` is called, `totalSupply` must decrease by exactly the burn amoun
 
 A buy followed by a refund cycle preserves `USDC.balanceOf(this) - fees`. Over any complete cycle, the backing retained from fees accumulates, but the relationship between supply and balance remains consistent.
 
-## 9. Composer-Only Functions Are Gated
+## 9. Privileged Route Functions Are Gated
 
-`buyFromComposer()` can only be called by the registered Composer address. Any other caller triggers a revert. `deposit()` and `redeem()` are public (no `onlyComposer` guard). This is verified by Certora.
+Internal route-only entrypoints are gated so ordinary users cannot call privileged routing paths. Public users should use direct `buy()` and `refund()` flows.
 
 ## 10. ERC-4626 Surface Consistency
 

@@ -20,7 +20,7 @@ dmfUSD
 
 - **Decimals = 6** — matches USDC, eliminating decimal conversion errors.
 - **No tracked `usdcReserves` variable** — backing is `USDC.balanceOf(address(this))` live. The contract explicitly states: `// NOTE: No tracked usdcReserves — backing = USDC.balanceOf(this) live.`
-- **No admin mint/freeze/pause** — once the Composer is set, only the Composer can call `buyFromComposer`. There is no admin mint function, no freeze mechanism, and no pause functionality after initial configuration.
+- **No admin mint/freeze/pause** — privileged routing entrypoints are restricted to their configured caller. There is no admin mint function, no freeze mechanism, and no pause functionality after initial configuration.
 
 ### Primary User Functions
 
@@ -28,9 +28,9 @@ dmfUSD
 - `refund(tokenAmount)` — User burns dmfUSD and receives USDC back. Anyone can call this.
 - `refundTo(recipient, tokenAmount)` — Burn dmfUSD and send USDC to a chosen EVM recipient.
 
-### Composer-Only Functions
+### Privileged Routing Functions
 
-- `buyFromComposer(buyer, usdcAmount)` — Called by the registered Composer to mint dmfUSD on behalf of a user (e.g., after a cross-chain swap arrives). Guarded by `onlyComposer`.
+- Internal route-only entrypoints are restricted to configured callers. Public users should use direct `buy()` and `refund()` flows.
 
 ### ERC-4626 Surface
 
@@ -49,8 +49,8 @@ The contract also exposes a standard ERC-4626 vault interface for composability:
 | `refund()` / `refundTo()` | nonReentrant | Anyone |
 | `deposit()` | nonReentrant | Anyone |
 | `redeem()` | nonReentrant | Anyone |
-| `buyFromComposer()` | onlyComposer + nonReentrant | Only Composer |
-| `setComposer()` | onlyOwner | Owner |
+| privileged route entrypoint | restricted + nonReentrant | Configured route caller |
+| route setup function | onlyOwner | Owner |
 | `setDevFeeRecipients()` | onlyOwner | Owner |
 | `transferOwnership()` | onlyOwner (Ownable2Step) | Owner |
 
@@ -64,14 +64,14 @@ Reserves work as follows:
 
 1. When a user calls `buy(amount)`, USDC is pulled into the contract.
 2. dmfUSD is minted to the user: `amount - fee`.
-3. The fee (90% backing, 15 bps; 10% dev, 10 bps) stays in the contract as excess backing.
+3. The fee is split into a 15 bps backing portion and a 10 bps Operations portion. The backing portion stays in the contract as excess backing.
 4. `totalAssets()` returns `USDC.balanceOf(address(this))` — the live USDC balance.
 
 This means the backing ratio is always >= 100%, and it increases over time as fees accumulate.
 
-## Composer Integration
+## Routing Integration
 
-The contract supports Composer integration via `buyFromComposer(buyer, usdcAmount)`. This is the only function guarded by `onlyComposer`. When the Composer receives USDC from a cross-chain swap, it calls `buyFromComposer` to mint dmfUSD directly to the buyer address.
+Public documentation should treat routing integrations generically. Users should not call internal route-only entrypoints directly; normal direct flows are `buy()` and `refund()`.
 
 ## Supply Tracking
 

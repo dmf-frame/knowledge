@@ -28,7 +28,7 @@ All reserves live on-chain in the DMF smart contract's USDC balance. No off-chai
 
 ## Immutable Contracts
 
-The DMF smart contracts are frozen in time. Once deployed, nobody — including the original devs — can change how they work. No admin keys, no upgrade proxies, no ownership functions, no pause mechanisms. This permanence means the protocol's rules are locked forever. Want to verify? Check the contract source on BaseScan — no upgradeable patterns, and the creator has renounced ownership. What you see is what you get, permanently.
+The DMF smart contracts are frozen in time. Once deployed, nobody can change how they work. No admin keys, no upgrade proxies, no ownership functions, no pause mechanisms. This permanence means the protocol's rules are locked forever. Want to verify? Check the contract source on BaseScan — no upgradeable patterns, and the creator has renounced ownership. What you see is what you get, permanently.
 
 ## Non-Custodial
 

@@ -45,11 +45,11 @@ Every `.md` file in the DMF Knowledge Base MUST include YAML frontmatter with th
 ```yaml
 ---
 title: Mint Operation Guide
-description: Step-by-step guide for minting stablecoins via DMFEngine
+description: Step-by-step guide for buying dmfUSD with USDC
 audience: human
 section: docs
 order: 5
-tags: [mint, stablecoin, collateral]
+tags: [buy, dmfUSD, backing]
 version: 1.0.0
 updated: 2026-01-15
 ---

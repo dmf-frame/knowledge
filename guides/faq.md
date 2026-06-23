@@ -46,7 +46,7 @@ It's the total USDC reserves divided by the total dmfUSD supply. Because fees ad
 
 ## 12. Can the admin mint unlimited dmfUSD?
 
-Nope. There's no admin mint function at all. The only way to create dmfUSD is through `buy()` (anyone can call it) or `buyFromComposer()` (Composer only). This is a structural invariant verified by Certora — it's mathematically guaranteed.
+Nope. There's no admin mint function at all. The normal public way to create dmfUSD is through `buy()`. This is a structural invariant verified by Certora — it's mathematically guaranteed.
 
 ## 13. What chains are supported?
 
@@ -54,7 +54,7 @@ Nope. There's no admin mint function at all. The only way to create dmfUSD is th
 
 ## 14. How do I add dmfUSD to my wallet?
 
-Use the dmfUSD contract address `0x739F52375F2087b54329e02BBC83F03120A758f3` on Base mainnet. On other networks, check the official addresses doc. Most wallets will auto-detect the token symbol and decimals (6). You can also import it manually using the contract address.
+Use the dmfUSD contract address `0x624624FD3821d5F4f8f799369727f08d8219ce58` on Base mainnet. On other networks, check the official addresses doc. Most wallets will auto-detect the token symbol and decimals (6). You can also import it manually using the contract address.
 
 ## 15. What happens if Circle freezes USDC in the contract?
 

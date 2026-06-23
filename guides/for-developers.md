@@ -1,155 +1,54 @@
-# Developer Integration Guide
+# For Developers
 
-So you want to integrate dmfUSD into your smart contracts or dApp? Great — let's get you set up. dmfUSD behaves like any standard ERC-20 token with a few extra goodies.
+This guide covers current public dmfUSD integration. dmfUSD is a Base-native ERC-20 with a compatible vault surface for internal routing integrations, but public integrations should focus on direct `buy()` and `refund()` flows unless the current contract ABI requires otherwise.
 
-## The Contract Interface
+## Core Facts
 
-dmfUSD is an ERC-20 token with ERC-4626 vault extensions. It uses 6 decimals (same as USDC), so no weird math when moving between the two.
+- Chain: Base
+- Decimals: 6, matching USDC
+- Backing: live USDC balance of the dmfUSD contract
+- Direct fee: 0.25%, capped at $20
+- Fee split: 0.15% backing, 0.10% Operations
+- No oracle, no debt, no liquidations
 
-Here's the minimal interface you'll need:
+## Buy dmfUSD
 
 ```solidity
-// SPDX-License-Identifier: MIT
-pragma solidity ^0.8.30;
-
-// Minimal dmfUSD interface for integration
-interface IDmfUSD {
-    // --- User functions ---
-    /// @notice Buy dmfUSD with USDC
-    /// @param usdcAmount Amount of USDC to spend (6 decimals)
-    /// @return dmfAmount Amount of dmfUSD minted
-    function buy(uint256 usdcAmount) external returns (uint256);
-    
-    /// @notice Refund dmfUSD for USDC
-    /// @param tokenAmount Amount of dmfUSD to burn
-    function refund(uint256 tokenAmount) external;
-    
-    /// @notice Refund dmfUSD to a specific recipient
-    /// @param recipient Address to receive USDC
-    /// @param tokenAmount Amount of dmfUSD to burn
-    function refundTo(address recipient, uint256 tokenAmount) external;
-
-    // --- View functions ---
-    /// @notice Get the backing token (USDC)
-    function asset() external view returns (address);
-    
-    /// @notice Get total USDC reserves (live balance)
-    function totalAssets() external view returns (uint256);
-    
-    /// @notice Get backing per token (6 decimals)
-    function getBackingPerToken() external view returns (uint256);
-
-    // --- ERC-4626 Preview functions ---
-    function previewDeposit(uint256 assets) external view returns (uint256);
-    function previewRedeem(uint256 shares) external view returns (uint256);
-    function convertToShares(uint256 assets) external pure returns (uint256);
-    function convertToAssets(uint256 shares) external pure returns (uint256);
-}
+IERC20(USDC).approve(dmfUSDAddress, usdcAmount);
+IDmfUSD(dmfUSDAddress).buy(usdcAmount);
 ```
 
-## Step 1: Approve USDC Spending
-
-Before calling `buy()`, your user needs to give the dmfUSD contract permission to pull their USDC:
+## Refund dmfUSD
 
 ```solidity
-IERC20(usdcAddress).approve(dmfUSDAddress, amount);
-```
-
-Standard ERC-20 approve. Nothing fancy.
-
-## Step 2: Buy dmfUSD
-
-Once approved, call `buy()`:
-
-```solidity
-uint256 usdcAmount = 100_000_000; // 100 USDC (6 decimals)
-uint256 dmfAmount = IDmfUSD(dmfUSDAddress).buy(usdcAmount);
-// dmfAmount = ~99.75 dmfUSD (100 USDC - 0.25% fee)
-```
-
-Want to know what you'll get before you commit? Use the preview function:
-
-```solidity
-uint256 estimatedDmf = IDmfUSD(dmfUSDAddress).previewDeposit(usdcAmount);
-```
-
-## Step 3: Check Balances and Backing
-
-```solidity
-// Check how much dmfUSD someone holds
-uint256 balance = IERC20(dmfUSDAddress).balanceOf(userAddress);
-
-// Check the total USDC reserves backing everything (live balance)
-uint256 reserves = IDmfUSD(dmfUSDAddress).totalAssets();
-
-// Check backing per token (usually ~1.0048+ USDC per dmfUSD)
-uint256 backing = IDmfUSD(dmfUSDAddress).getBackingPerToken();
-```
-
-## Step 4: Redeem (Refund) dmfUSD Back to USDC
-
-Ready to cash out? Here's how:
-
-```solidity
-uint256 dmfAmount = 100_000_000; // 100 dmfUSD
-
-// Check how much USDC you'll get
-uint256 estimatedUsdc = IDmfUSD(dmfUSDAddress).previewRedeem(dmfAmount);
-
-// Send USDC back to yourself
 IDmfUSD(dmfUSDAddress).refund(dmfAmount);
-
-// Or send USDC to a different address
 IDmfUSD(dmfUSDAddress).refundTo(receiverAddress, dmfAmount);
 ```
 
-No extra approval needed for refunds — the dmfUSD gets burned straight from your balance.
-
-## Step 5: Composer Integration (Advanced)
-
-If you're routing cross-chain swaps through the Composer, use `buyFromComposer`:
-
-```solidity
-// buyFromComposer (only the registered Composer can call this)
-function buyFromComposer(address buyer, uint256 usdcAmount)
-    external onlyComposer nonReentrant returns (uint256);
-```
-
-Regular users calling `buyFromComposer()` will get an `OnlyComposer()` error — that function is reserved for the cross-chain swap pipeline.
-
-**Note:** The ERC-4626 `deposit()` and `redeem()` functions are **not** Composer-only. They are public (guarded only by `nonReentrant`). Anyone can call them.
-
-To register the Composer address:
-```solidity
-IDmfUSD(dmfUSDAddress).setComposer(composerAddress);
-```
-Only the contract owner can call this.
+No extra approval is needed for refunds because the dmfUSD is burned from the caller balance.
 
 ## Events to Watch For
 
 ```solidity
-event Buy(address indexed user, uint256 usdcAmount, uint256 dmfAmount, uint256 fee);
-event Refund(address indexed user, uint256 tokenAmount, uint256 usdcAmount);
-event Deposit(address indexed caller, address indexed receiver, uint256 assets, uint256 shares);
-event Withdraw(address indexed caller, address indexed receiver, address indexed owner, uint256 shares, uint256 assets);
+event Buy(address indexed buyer, uint256 usdcIn, uint256 tokensMinted, uint256 operationsFeeUsdc, uint256 backingFeeUsdc);
+event Refund(address indexed sender, address indexed recipient, uint256 tokensBurned, uint256 usdcOut, uint256 operationsFeeUsdc, uint256 backingFeeUsdc);
 ```
 
-## Common Errors (and What They Mean)
+## Common Errors
 
 | Error | What Went Wrong |
 |---|---|
-| `InvalidAddress()` | You passed a zero address somewhere |
-| `InvalidAmount()` | You passed zero as the amount |
-|| `OnlyComposer()` | Someone other than the Composer tried buyFromComposer |
-| `OnlyOwner()` | A non-owner tried an admin function |
+| `InvalidAddress()` | Zero address supplied |
+| `InvalidAmount()` | Zero amount supplied |
+| `OnlyOwner()` | Non-owner tried an owner-only setup function |
 | Revert on approve | Not enough USDC approved |
-| Revert on buy | Fee eats more than the remaining balance |
+| Revert on buy | Amount too small after fee or insufficient USDC |
+| Revert on refund | Insufficient dmfUSD balance or insufficient live reserves |
 
 ## Quick Reference
 
-```
-dmfUSD chain: Base (chain ID 8453 or 84532)
+```text
+dmfUSD chain: Base, chain ID 8453
+USDC Base: 0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913
 dmfUSD decimals: 6
-USDC (Base): 0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913
-USDC (Base Sepolia): 0x036CbD53842c5426634e7929541eC2318f3dCF7e
 ```

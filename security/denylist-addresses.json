@@ -1,0 +1,6 @@
+{
+  "version": "1.0.0",
+  "updated": "2026-06-22",
+  "description": "Local denylist of known malicious addresses related to DMF impersonation. Append-only; review before adding.",
+  "addresses": []
+}

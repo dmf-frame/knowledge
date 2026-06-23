@@ -31,7 +31,7 @@ With dmfUSD, anyone can independently verify the backing ratio in real-time on B
 dmfUSD has no admin mint function, no token freeze capability, and no pause mechanism. Once ownership is renounced, no entity can alter the contract's core behavior. This contrasts with USDC and USDT, where Circle and Tether can freeze addresses, and DAI, where Maker governance has upgrade powers.
 
 ### Fee Model
-dmfUSD charges a symmetric 0.25% fee (capped at $20) on both buy and sell. 90% of fees benefit all holders by increasing the backing ratio. This is different from USDC/USDT (no fees on transfer) and DAI (variable stability fees).
+dmfUSD charges a symmetric 0.25% fee (capped at $20) on both buy and sell. 60% of the fee, equal to 0.15% of the transaction amount, strengthens backing by increasing the reserve ratio. The remaining 40%, equal to 0.10% of the transaction amount, goes to Operations. This is different from USDC/USDT (no fees on transfer) and DAI (variable stability fees).
 
 ### Permissionless Minting
 Anyone with USDC can mint dmfUSD by calling `buy()` — no KYC, no whitelist. USDC and USDT can only be minted by their issuers. DAI is permissionless but requires overcollateralized CDPs with liquidation risk.

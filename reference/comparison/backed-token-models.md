@@ -78,4 +78,4 @@ Backed tokens reduce reliance on algorithms and market mechanics for price stabi
 - Overcollateralization = protection against volatility, but with liquidation risk.
 - Algorithmic = no real backing, highest risk.
 
-dmfUSD combines on-chain verifiability with the stability of USDC, creating a transparent and trust-minimized stable asset.
+dmfUSD combines on-chain verifiability with USDC backing, creating a transparent and trust-minimized backed digital token.

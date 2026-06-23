@@ -13,7 +13,7 @@ The complete Certora specification proved 7 rules covering all core contract beh
 | `buy_increases_totalSupply` | ✅ | Supply increases by correct amount |
 | `mint_burn_symmetry` | ✅ | buy+refund cycles preserve reserves |
 | `permit_approval` | ✅ | EIP-2612 signature verification correct |
-| `onlyComposer_cannot_be_called_by_user` | ✅ | buyFromComposer gated from public |
+| `privileged_route_cannot_be_called_by_user` | ✅ | privileged route entrypoint gated from public |
 | `deposit_and_redeem_public_access` | ✅ | deposit/redeem are public (nonReentrant only) |
 
 ## Lean Spec (3 Core Invariants Proved)
@@ -22,7 +22,7 @@ A focused "lean spec" was also run to mathematically prove the three most critic
 
 | Rule | Type | Status | What It Proves |
 |------|------|--------|----------------|
-| `supply_not_underflow` | Invariant | ✅ Proved | `totalSupply >= totalMinted - totalBurned` — dev fee mints create the delta |
+| `supply_not_underflow` | Invariant | ✅ Proved | `totalSupply >= totalMinted - totalBurned` — Operations fee mints create the delta |
 | `fee_cap_validity` | Rule | ✅ Proved | 25 bps fee never exceeds $20 `MAX_VARIABLE_FEE_USDC` |
 | `fee_split_consistency` | Rule | ✅ Proved | devFee (10/25) + backingFee (15/25) always equals totalFee |
 
@@ -30,7 +30,7 @@ A focused "lean spec" was also run to mathematically prove the three most critic
 
 The verification used CVL (Certora Verification Language) to model the contract's state transitions. The prover exhaustively checks all possible execution paths against the specified rules, including:
 
-- All possible caller addresses (composer, non-composer, owner, random user)
+- All possible caller addresses (privileged route caller, non-privileged caller, owner, random user)
 - All possible input amounts (zero, small, large, cap-boundary)
 - All possible state combinations (initial, post-buy, post-refund, post-transfer)
 - Reentrancy scenarios via callbacks
