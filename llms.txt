@@ -29,6 +29,7 @@ https://raw.githubusercontent.com/dmf-frame/knowledge/main/agents/CLAUDE.md
 https://raw.githubusercontent.com/dmf-frame/knowledge/main/agents/AGENTS.md
 https://raw.githubusercontent.com/dmf-frame/knowledge/main/agents/ai-assistant-guide.md
 https://raw.githubusercontent.com/dmf-frame/knowledge/main/agents/bot-integration-guide.md
+https://raw.githubusercontent.com/dmf-frame/knowledge/main/agents/webmcp-tool-catalog.md
 https://raw.githubusercontent.com/dmf-frame/knowledge/main/agents/prompts/fee-explanation.md
 https://raw.githubusercontent.com/dmf-frame/knowledge/main/agents/prompts/security-guidelines.md
 https://raw.githubusercontent.com/dmf-frame/knowledge/main/agents/prompts/code-review.md
