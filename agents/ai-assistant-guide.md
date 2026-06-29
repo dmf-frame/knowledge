@@ -8,6 +8,21 @@ order: 3
 
 # AI Assistant Guide for DMF
 
+## WebMCP Tools (Live)
+
+DMF supports WebMCP — a browser API that lets AI agents interact with dmfam.org and app.dmfam.org through 29 structured tools. Agents can read protocol data, search FAQ, preview buys/sells, and execute transactions (with user confirmation + wallet signature).
+
+**For full tool catalog with schemas and example workflows, see:**
+[WebMCP Tool Catalog](webmcp-tool-catalog.md)
+
+**Quick check:**
+```javascript
+if (typeof document !== 'undefined' && document.modelContext?.registerTool) {
+  const tools = await document.modelContext.listTools();
+  // 29 tools available on dmfam.org and app.dmfam.org
+}
+```
+
 ## Protocol Understanding
 
 DMF is the Digital Monetary Framework on Base. The current user-facing asset is dmfUSD.
