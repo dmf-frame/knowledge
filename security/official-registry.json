@@ -1,0 +1,71 @@
+{
+  "version": "1.1.0",
+  "updated": "2026-09-27",
+  "chain_id": 8453,
+  "chain_name": "Base Mainnet",
+  "contracts": {
+    "dmfUSD": {
+      "address": "0x3a6f90b8517ff16b7a8c368f05f38bb03afd4aa7",
+      "type": "ERC-20 Token",
+      "description": "Official dmfUSD token contract. Immutable full-reserve USDC backing.",
+      "risk": "LOW"
+    }
+  },
+  "domains": {
+    "primary": {
+      "host": "dmfam.org",
+      "url": "https://dmfam.org",
+      "description": "Official DMF website",
+      "risk": "LOW"
+    },
+    "app": {
+      "host": "app.dmfam.org",
+      "url": "https://app.dmfam.org",
+      "description": "DMF application — separate from the dmfam.org site; swap and bridge are no longer documented there",
+      "risk": "LOW"
+    },
+    "swap_bridge_external": {
+      "host": "bridge.blockchainbridge.ai",
+      "url": "https://bridge.blockchainbridge.ai/",
+      "description": "External Swap & Bridge service used by DMF (BlockchainBridge). Opens on its own site; not operated by DMF.",
+      "external": true,
+      "risk": "LOW"
+    }
+  },
+  "official_paths": [
+    "/white-paper",
+    "/security",
+    "/transparency",
+    "/faq"
+  ],
+  "social_handles": {
+    "twitter": [
+      "dmf_frame"
+    ],
+    "telegram_bot": [
+      "SofiaDMF_bot"
+    ]
+  },
+  "typosquat_patterns": [
+    "dmfam0rg",
+    "dmfam-org",
+    "dmfam-app",
+    "dmfam-app.com",
+    "dmfam-claim",
+    "dmfam-claim.net",
+    "dmfam.net",
+    "dmfam.io",
+    "dmf-usd",
+    "dmfusd-claim",
+    "claim-dmf",
+    "dmf-verify",
+    "dmfsupport"
+  ],
+  "impersonation_handle_patterns": [
+    "dmf_framee",
+    "dmf_support",
+    "dmfverify",
+    "dmf_official",
+    "dmfsupport_official"
+  ]
+}
